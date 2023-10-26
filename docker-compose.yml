@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  app:
+    container_name: demo1
+    build: .
+    ports:
+      - "9999:8080"
+    environment:
+      JDBC_DATABASE_URL: jdbc:mysql://db:3306/players
+      JDBC_USERNAME: user
+      JDBC_PASSWORD: password
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0.34
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: players
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3307:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+
+volumes:
+  db-data:
